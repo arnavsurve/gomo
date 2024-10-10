@@ -1,8 +1,8 @@
 build:
-	go build -o tmp/gomodoro main.go
+	go build -o tmp/gomo main.go
 
 run: build
-	./tmp/gomodoro start
+	./tmp/gomo start
 
 clean:
-	rm -rf ./tmp/gomodoro
+	rm -rf ./tmp/gomo

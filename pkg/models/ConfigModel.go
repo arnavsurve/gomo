@@ -8,7 +8,7 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/arnavsurve/gomodoro/pkg/styles"
+	"github.com/arnavsurve/gomo/pkg/styles"
 	"github.com/charmbracelet/bubbles/textinput"
 	tea "github.com/charmbracelet/bubbletea"
 	"gopkg.in/yaml.v2"
@@ -16,7 +16,7 @@ import (
 
 var (
 	home, _ = os.UserHomeDir()
-	Path    = fmt.Sprintf("%s/.config/gomodoro/config.yaml", home)
+	Path    = fmt.Sprintf("%s/.config/gomo/config.yaml", home)
 )
 
 type Config struct {

@@ -1,4 +1,4 @@
-module github.com/arnavsurve/gomodoro
+module github.com/arnavsurve/gomo
 
 go 1.23.1
 

@@ -1,8 +1,11 @@
 package cmd
 
 import (
+	"log"
 	"os"
 
+	"github.com/arnavsurve/gomodoro/pkg/models"
+	tea "github.com/charmbracelet/bubbletea"
 	"github.com/spf13/cobra"
 )
 
@@ -16,9 +19,23 @@ examples and usage of using your application. For example:
 Cobra is a CLI library for Go that empowers applications.
 This application is a tool to generate the needed files
 to quickly create a Cobra application.`,
-	// Uncomment the following line if your bare application
-	// has an action associated with it:
-	// Run: func(cmd *cobra.Command, args []string) { },
+	Run: func(cmd *cobra.Command, args []string) {
+		if len(args) > 0 {
+			switch args[0] {
+			case "start":
+				p := tea.NewProgram(models.NewStartModel(1200)) // TODO placeholder, pass user configured value (in seconds) to the model params. 1200 = 20 min * 60 sec
+				if _, err := p.Run(); err != nil {
+					log.Fatal(err)
+				}
+
+			case "config":
+				p := tea.NewProgram(models.NewConfigModel())
+				if _, err := p.Run(); err != nil {
+					log.Fatal(err)
+				}
+			}
+		}
+	},
 }
 
 // Execute adds all child commands to the root command and sets flags appropriately.

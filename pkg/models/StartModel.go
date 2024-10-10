@@ -23,6 +23,7 @@ type startModel struct {
 	duration  int
 	quitting  bool
 	err       error
+	conf      Config
 }
 
 // NewStartModel displays the pomodoro timer's progress. It takes a duration in seconds.
@@ -35,7 +36,9 @@ func NewStartModel(duration int) startModel {
 
 	sw := stopwatch.New()
 
-	return startModel{spinner: s, progress: p, stopwatch: sw, duration: duration}
+	c := Config{}
+
+	return startModel{spinner: s, progress: p, stopwatch: sw, duration: duration, conf: *c.GetConf()}
 }
 
 func (m startModel) Init() tea.Cmd {

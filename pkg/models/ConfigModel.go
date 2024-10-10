@@ -49,6 +49,7 @@ func NewConfigModel() configModel {
 		inputs: make([]textinput.Model, 3),
 	}
 
+	m.saveConfig(Path)
 	config := Config{}
 	c := config.GetConf()
 
@@ -171,11 +172,11 @@ func (m configModel) saveConfig(path string) error {
 	}
 	short, err := strconv.Atoi(m.inputs[1].Value())
 	if err != nil || m.inputs[1].Value() == "" {
-		short = 5
+		short = 10
 	}
 	long, err := strconv.Atoi(m.inputs[2].Value())
 	if err != nil || m.inputs[2].Value() == "" {
-		long = 10
+		long = 20
 	}
 
 	err = enc.Encode(Config{

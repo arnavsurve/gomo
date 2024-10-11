@@ -12,28 +12,30 @@ import (
 // rootCmd represents the base command when called without any subcommands
 var rootCmd = &cobra.Command{
 	Use:   "gomo",
-	Short: "A brief description of your application",
-	Long: `A longer description that spans multiple lines and likely contains
-examples and usage of using your application. For example:
-
-Cobra is a CLI library for Go that empowers applications.
-This application is a tool to generate the needed files
-to quickly create a Cobra application.`,
+	Short: "A minimal pomodoro utility for the CLI",
+	Long: `gomo is a minimal pomodoro utility for the CLI.
+	Written in Go with the Bubbletea TUI framework and the only CLI commander that matters, Cobra.
+	Created by Arnav Surve (arnav@surve.dev, linkedin.com/in/arnavsurve, github.com/arnavsurve)`,
 	Run: func(cmd *cobra.Command, args []string) {
 		if len(args) > 0 {
 			switch args[0] {
 			case "start":
-				p := tea.NewProgram(models.NewStartModel(1200)) // TODO placeholder, pass user configured value (in seconds) to the model params. 1200 = 20 min * 60 sec
+				// Unmarshal config yaml to be passed into models
+				config := models.Config{}
+				c := *config.GetConf()
+
+				// Start timer with focus duration
+				p := tea.NewProgram(models.NewStartModel(c.Focus * 60))
 				if _, err := p.Run(); err != nil {
 					log.Fatal(err)
 				}
-
 			case "config":
 				p := tea.NewProgram(models.NewConfigModel())
 				if _, err := p.Run(); err != nil {
 					log.Fatal(err)
 				}
 			}
+		} else if len(args) == 0 {
 		}
 	},
 }

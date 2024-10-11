@@ -62,12 +62,21 @@ func (m startModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 
 	case tickMsg:
 		if m.progress.Percent() == 1.0 {
-			return m, tea.Quit // TODO handle progress complete - sound and prompt for break?
+			switch m.duration {
+			case m.conf.Focus:
+				// TODO if 3 shorts in history, then long
+				return m, func() tea.Msg {
+					return NewStartModel(m.conf.Short * 60)
+				}
+			case m.conf.Long, m.conf.Short:
+				return m, func() tea.Msg {
+					return NewStartModel(m.conf.Focus * 60)
+				}
+			} // TODO handle progress complete - sound and prompt for break?
 		}
 
 		// Note that you can also use progress.Model.SetPercent to set the
 		// percentage value explicitly, too.
-		// TODO scale this with pomodoro time (20min/10min/15min) (duration)
 		// Increments once every second
 		cmd := m.progress.IncrPercent(1 / float64(m.duration))
 		return m, tea.Batch(tickCmd(), cmd)
